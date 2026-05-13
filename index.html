@@ -58,11 +58,11 @@
           </p>
           <div class="column has-text-centered" style="margin-top: 1.5rem;">
             <div class="publication-links">
-              <!-- Paper (placeholder) -->
+              <!-- Paper PDF -->
               <span class="link-block">
-                <a class="external-link button is-normal is-rounded is-dark" title="Paper coming soon" style="opacity: 0.6;">
+                <a href="./static/SafeDrug_Paper.pdf" class="external-link button is-normal is-rounded is-dark" target="_blank">
                   <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                  <span>Paper (Coming Soon)</span>
+                  <span>Paper (PDF)</span>
                 </a>
               </span>
               <!-- HuggingFace Dataset -->
@@ -87,7 +87,9 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3" id="abstract">Abstract</h2>
         <div class="content has-text-justified">
-          <p>-</p>
+          <p>
+            Large language models (LLMs) have shown strong performance on biomedical tasks, yet evaluating their reasoning in safety-critical pharmacological contexts requires large-scale, structured datasets. We present SafeDrug, a benchmark dataset for systematic evaluation of pharmacological reasoning across multiple task dimensions. SafeDrug integrates heterogeneous sources, including adverse drug event records, drug–drug interaction knowledge, literature-derived evidence, and population-specific information such as child, adult, and older adult groups, into a unified reasoning-oriented QA format. The benchmark comprises two complementary subsets. SafeDrug-large provides broad coverage at scale, while SafeDrug-small is a high-quality human-annotated subset for precise evaluation. It supports tasks such as prediction, risk assessment, mechanism explanation, evidence-grounded QA, and drug replacement across both single-drug and multi-drug settings. Our evaluation shows that LLMs capture outcome-level associations but struggle with mechanistic reasoning, evidence alignment, and population-aware predictions. SafeDrug provides a foundation for reproducible benchmarking and advances research on evidence-grounded and population-aware pharmacological reasoning in LLMs.
+          </p>
         </div>
       </div>
     </div>
