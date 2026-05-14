@@ -536,8 +536,13 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.navbar-item[href^="#"]').forEach(function (link) {
     link.addEventListener('click', function (e) {
       e.preventDefault();
-      var target = document.querySelector(this.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      var href = this.getAttribute('href');
+      if (href === '#') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        var target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }
       if ($burger && $burger.classList.contains('is-active')) $burger.click();
     });
   });

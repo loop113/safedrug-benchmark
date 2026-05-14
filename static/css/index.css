@@ -29,6 +29,10 @@
   --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Noto Sans', sans-serif;
   color: var(--color-text);
@@ -58,6 +62,9 @@ h1, h2, h3, h4, h5, h6, .title, .menu-label, .navbar-item strong {
   min-height: 3.25rem;
   padding-top: 0;
   padding-bottom: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .navbar-item {
@@ -226,16 +233,23 @@ h1, h2, h3, h4, h5, h6, .title, .menu-label, .navbar-item strong {
 #datasetDetail .json-preview .null { color: #c4b5fd; }
 
 /* ========== LEADERBOARD ========== */
+.tab-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
 .tab-content {
   visibility: hidden;
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   pointer-events: none;
 }
 
 .tab-content.is-visible {
   visibility: visible;
-  position: relative;
+  position: static;
   pointer-events: auto;
   animation: fadeSlideIn 0.3s ease;
 }
@@ -478,7 +492,7 @@ th.group-sep, td.group-sep {
 /* ========== FOOTER ========== */
 .footer {
   background: var(--color-bg);
-  padding: 2.5rem 1.5rem;
+  padding: 1.5rem 1.5rem;
   border-top: 1px solid var(--color-border);
 }
 
