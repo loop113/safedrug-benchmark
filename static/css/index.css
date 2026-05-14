@@ -54,6 +54,17 @@ h1, h2, h3, h4, h5, h6, .title, .menu-label, .navbar-item strong {
   background: var(--color-bg) !important;
 }
 
+.navbar {
+  min-height: 3.25rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.navbar-item {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 /* ========== HERO ========== */
 .hero.is-primary {
   background: linear-gradient(135deg, #0E7490 0%, #0891B2 50%, #22D3EE 100%);
