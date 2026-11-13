@@ -550,12 +550,12 @@ var DATASET_CATEGORIES = [
   }
 ];
 
-// HuggingFace dataset page (data is in data.zip - individual files not directly downloadable)
+// Individual data files and the complete data.zip are both published on HuggingFace.
 var HF_DATASET_URL = 'https://huggingface.co/datasets/JM00113/SafeDrug';
 
-// Helper: get download URL (points to dataset page; user can extract file from data.zip)
+// Encode path segments without turning directory separators into encoded characters.
 function getDownloadUrl(filePath) {
-  return HF_DATASET_URL;
+  return HF_BASE + '/' + filePath.split('/').map(encodeURIComponent).join('/') + '?download=true';
 }
 
 // Helper: get expected path within the zip for reference

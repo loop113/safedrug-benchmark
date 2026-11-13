@@ -62,10 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
         '<span class="tag is-warning is-light">' + sub.taskType + '</span></div>' +
         '<p class="mb-4">' + sub.description + '</p>' +
         '<div class="mb-3"><strong>Fields:</strong> <code>' + sub.fields.join(', ') + '</code></div>' +
-        '<div class="notification is-warning is-light"><p class="mb-2"><strong>Local data path:</strong> This file is present in the project data directory. Check the HuggingFace dataset page for public file availability or download instructions:</p>' +
+        '<div class="notification is-info is-light"><p class="mb-2"><strong>Download:</strong> Get this individual file below, or download the <a href="https://huggingface.co/datasets/JM00113/SafeDrug/resolve/main/data.zip?download=true">complete data.zip</a>. Path inside the archive:</p>' +
         '<code style="word-break:break-all">' + zipPath + '</code></div>' +
         '<a class="button btn-download" href="' + getDownloadUrl(sub.file) + '" target="_blank">' +
-        '<span class="icon"><i class="fas fa-download"></i></span><span>Go to HuggingFace Dataset</span></a>' +
+        '<span class="icon"><i class="fas fa-download"></i></span><span>Download this file</span></a>' +
         '<hr><h5 class="title is-6">Task Category: ' + cat.name + '</h5><p class="mb-2">' + cat.description + '</p>' +
         '<p class="is-size-7 has-text-grey"><strong>' + cat.subs.length + '</strong> sub-datasets in this category</p>' + exampleHtml;
     }

@@ -83,3 +83,10 @@ test('Dataset Explorer indexes every local JSON/JSONL data file when parent data
   assert.equal(listed.size, actual.length);
   for (const file of actual) assert.ok(listed.has(file), `Missing ${file}`);
 });
+
+test('Dataset Explorer offers a direct download for a 6-drug dataset', () => {
+  const context = vm.createContext({});
+  load('static/js/data.js', context);
+  assert.equal(context.getDownloadUrl('Large/multiple_drug_prediction/ddi_prediction/6_drug.jsonl'),
+    'https://huggingface.co/datasets/JM00113/SafeDrug/resolve/main/data/Large/multiple_drug_prediction/ddi_prediction/6_drug.jsonl?download=true');
+});

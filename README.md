@@ -17,7 +17,7 @@ For polypharmacy, 3–5-drug results use 2,000 sampled test cases per group, whe
 
 The [SafeDrug dataset](https://huggingface.co/datasets/JM00113/SafeDrug) is hosted separately. Its current dataset-card license is CC BY-NC 4.0; source datasets can have additional terms. This site is for research evaluation, not clinical decision-making.
 
-The Dataset Explorer indexes the 42 JSON/JSONL files currently present in the parent project's `data` directory, including 3–10-drug DDI and risk files, the Qwen-prepared Small split, source records, and documentation. The explorer lists local paths and points to the HuggingFace dataset page; it does not prove that every newly indexed file has been uploaded there. Confirm the published archive before announcing individual files as downloadable.
+The Dataset Explorer indexes all 42 JSON/JSONL files in the release, including 3–10-drug DDI and risk files, the Qwen-prepared Small split, source records, and documentation. Individual download buttons use Hugging Face `resolve/main/data/` links. The complete `data.zip` includes the same data directory plus Markdown documentation. Published sizes and SHA-256 checksums are available in the dataset repository's `release_manifest.json`.
 
 The paper button serves `static/SafeDrug_Paper.pdf`, replaced locally with the 12 November 2026 accepted-paper file supplied by the author.
 
