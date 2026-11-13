@@ -1,7 +1,7 @@
 // SafeDrug Benchmark - Leaderboard Data
 
 // ============================================================
-// LARGE BENCHMARK - Exact Match (EM%) on Test Set
+// LARGE BENCHMARK - Original test-set metrics (age ADE: Set-F1; others: EM)
 // ============================================================
 
 var LARGE_MODELS = [
@@ -17,9 +17,9 @@ var LARGE_MODELS = [
 ];
 
 var LARGE_TASKS = [
-  { id: 'child', name: 'ADE - Child', category: 'ADE Prediction' },
-  { id: 'adult', name: 'ADE - Adult', category: 'ADE Prediction' },
-  { id: 'older_adult', name: 'ADE - Older Adult', category: 'ADE Prediction' },
+  { id: 'child', name: 'ADE - Child', category: 'ADE Prediction', metric: 'Set-F1' },
+  { id: 'adult', name: 'ADE - Adult', category: 'ADE Prediction', metric: 'Set-F1' },
+  { id: 'older_adult', name: 'ADE - Older Adult', category: 'ADE Prediction', metric: 'Set-F1' },
   { id: 'ade_prediction', name: 'ADE Overall', category: 'ADE Prediction' },
   { id: 'ade_risk', name: 'ADE Risk', category: 'ADE Risk Prediction' },
   { id: 'ddi_prediction', name: 'DDI Type', category: 'DDI Prediction' },
@@ -36,7 +36,7 @@ var LARGE_TASKS = [
   { id: 'multi_risk_10', name: 'Multi Risk (10)', category: 'Multiple Drug Prediction' }
 ];
 
-// EM% values: rows = models (same order as LARGE_MODELS), cols = tasks (same order as LARGE_TASKS)
+// Values are percentages; first three age ADE columns are Set-F1, others EM.
 var LARGE_DATA = [
   // qwen2.5:7b
   [2.02, 18.02, 6.68, 15.73, 29.53, 28.16, 42.55, 23.28, 68.42, 47.11, 48.60, 53.13, 65.29, 42.83, 38.66, 39.27, 45.24],

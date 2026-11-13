@@ -17,7 +17,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="./static/js/data.js"></script>
   <script src="./static/js/leaderboard_data.js"></script>
+  <script src="./static/js/rebuttal_data.js"></script>
   <script defer src="./static/js/index.js"></script>
+  <script defer src="./static/js/rebuttal_render.js"></script>
 </head>
 <body>
 
@@ -46,6 +48,10 @@
       <a class="navbar-item nav-pill" href="#leaderboard">
         <span class="icon"><i class="fas fa-trophy"></i></span>
         <span>Leaderboard</span>
+      </a>
+      <a class="navbar-item nav-pill" href="#rebuttal-results">
+        <span class="icon"><i class="fas fa-chart-bar"></i></span>
+        <span>Supplementary results</span>
       </a>
     </div>
   </div>
@@ -160,8 +166,8 @@
     <!-- Large Benchmark -->
     <div class="tab-content is-visible" id="tab-large">
       <div class="box">
-        <h3 class="title is-4">Large Benchmark — Exact Match (EM%)</h3>
-        <p class="mb-4">9 models evaluated across 17 sub-tasks spanning 7 categories. Higher is better. Click column headers to sort.</p>
+        <h3 class="title is-4">Large Benchmark — original results</h3>
+        <p class="mb-4">9 models across 17 sub-tasks. Age-specific ADE uses Set-F1; other tasks use Exact Match. The 17-task average mixes these metrics and is descriptive only. Choose a task to see its metric; click column headers to sort.</p>
 
         <!-- Sub-Task Selector -->
         <div class="mb-4">
@@ -247,6 +253,65 @@
       </div>
     </div>
     </div> <!-- close tab wrapper -->
+  </div>
+</section>
+
+<!-- ========== REBUTTAL EXPERIMENTS ========== -->
+<section class="section" id="rebuttal-results">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Supplementary evaluations</h2>
+    <p class="has-text-centered mb-5">Rebuttal-stage experiments. These models were evaluated on selected tasks, so they are not included in the original 17-task average.</p>
+    <div class="box">
+      <h3 class="title is-4">Population-specific ADE</h3>
+      <p>Set-F1 (%) on the age-specific test sets. All nine original models, five new frontier models and two medical models are shown together; coverage is displayed where recorded.</p>
+      <div class="table-container"><table class="table is-striped is-fullwidth" id="rebuttalPopulation"><thead></thead><tbody></tbody></table></div>
+    </div>
+    <div class="box">
+      <h3 class="title is-4">Mechanism and evidence grounding</h3>
+      <p>Mechanism prediction uses accuracy. Evidence selection uses Set-F1; generation uses ROUGE-L, BLEU, BERTScore-F1 (roberta-large), and LLM-judge pass rate. Evidence results are based on 32 examples per model. Metrics measure different aspects and should not be treated as interchangeable.</p>
+      <div class="table-container"><table class="table is-striped is-fullwidth" id="rebuttalMechanism"><thead></thead><tbody></tbody></table></div>
+      <div class="table-container"><table class="table is-striped is-fullwidth" id="rebuttalEvidence"><thead></thead><tbody></tbody></table></div>
+      <p>Medical-model drug replacement Exact Match: HuatuoGPT 58.49%; MedGemma1.5 50.39%. Their very low mechanism accuracy coincides with severe output-class concentration; domain specialization is task-dependent.</p>
+    </div>
+    <div class="box">
+      <h3 class="title is-4">Polypharmacy risk · 3–10 drugs</h3>
+      <p>Accuracy, balanced accuracy and macro-F1 (%) for three frontier models. Select a metric to compare every drug count. The 3–5 drug groups use 2,000 test examples each; 6–10 use the available test set (824, 418, 254, 144 and 84 examples). Original results cover only 3, 4, 5 and 10 drugs and are not silently extrapolated to 6–9.</p>
+      <label for="polyMetric"><strong>Metric:</strong></label>
+      <select id="polyMetric" class="select is-small"><option value="accuracy">Accuracy</option><option value="balanced">Balanced accuracy</option><option value="macroF1">Macro-F1</option></select>
+      <div class="table-container mt-3"><table class="table is-striped is-fullwidth" id="rebuttalPoly"><thead></thead><tbody></tbody></table></div>
+      <p class="is-size-7">Risk labels become increasingly imbalanced and high-drug-count samples become sparse. A rising raw accuracy alone does not demonstrate better compositional reasoning.</p>
+    </div>
+    <div class="box">
+      <h3 class="title is-4">Expanded polypharmacy data</h3>
+      <p>The released HODDI-derived task files cover 3–10 drugs: 146,979 DDI-prediction records and 167,078 risk-prediction records (314,057 combined). The table gives dataset counts, not evaluation sample sizes; the 6–9 drug groups were absent from the original results table.</p>
+      <div class="table-container"><table class="table is-striped is-fullwidth">
+        <thead><tr><th>Drugs</th><th>DDI prediction</th><th>Risk prediction</th></tr></thead>
+        <tbody>
+          <tr><td>3</td><td>84,376</td><td>113,595</td></tr>
+          <tr><td>4</td><td>35,116</td><td>34,413</td></tr>
+          <tr><td>5</td><td>11,508</td><td>10,474</td></tr>
+          <tr><td>6</td><td>7,595</td><td>4,116</td></tr>
+          <tr><td>7</td><td>3,920</td><td>2,083</td></tr>
+          <tr><td>8</td><td>2,466</td><td>1,267</td></tr>
+          <tr><td>9</td><td>1,397</td><td>713</td></tr>
+          <tr><td>10</td><td>601</td><td>417</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="box">
+      <h3 class="title is-4">SafeDrug-small construction-source check</h3>
+      <p>GPT-5-mini and Gemini-2.5-Flash were evaluated on both DeepSeek- and Qwen-prepared datasets; mechanism and evidence generation were repeated five times per model and source. Repeated scores were stable, but Qwen-source references yielded higher lexical overlap and modestly higher BERTScore-F1. The nearly saturated LLM-judge scores do not establish agreement with clinicians.</p>
+      <p class="is-size-7">Mean change on Qwen-prepared versus DeepSeek-prepared data; source: <code>results/small_source_stability/full/aggregate/dataset_comparison.csv</code>.</p>
+      <div class="table-container"><table class="table is-striped is-fullwidth">
+        <thead><tr><th>Model</th><th>Generation task</th><th>Δ ROUGE-L</th><th>Δ BLEU</th><th>Δ BERTScore-F1</th></tr></thead>
+        <tbody>
+          <tr><td>Gemini-2.5-Flash</td><td>Mechanism</td><td>+0.0267</td><td>+1.3535</td><td>+0.0053</td></tr>
+          <tr><td>Gemini-2.5-Flash</td><td>Evidence</td><td>+0.0729</td><td>+4.9096</td><td>+0.0133</td></tr>
+          <tr><td>GPT-5-mini</td><td>Mechanism</td><td>+0.0194</td><td>+0.9731</td><td>+0.0032</td></tr>
+          <tr><td>GPT-5-mini</td><td>Evidence</td><td>+0.0555</td><td>+2.8182</td><td>+0.0090</td></tr>
+        </tbody>
+      </table></div>
+    </div>
   </div>
 </section>
 

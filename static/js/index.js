@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         '<span class="tag is-warning is-light">' + sub.taskType + '</span></div>' +
         '<p class="mb-4">' + sub.description + '</p>' +
         '<div class="mb-3"><strong>Fields:</strong> <code>' + sub.fields.join(', ') + '</code></div>' +
-        '<div class="notification is-warning is-light"><p class="mb-2"><strong>Note:</strong> Dataset is packaged as <code>data.zip</code> on HuggingFace. Download and extract:</p>' +
+        '<div class="notification is-warning is-light"><p class="mb-2"><strong>Local data path:</strong> This file is present in the project data directory. Check the HuggingFace dataset page for public file availability or download instructions:</p>' +
         '<code style="word-break:break-all">' + zipPath + '</code></div>' +
         '<a class="button btn-download" href="' + getDownloadUrl(sub.file) + '" target="_blank">' +
         '<span class="icon"><i class="fas fa-download"></i></span><span>Go to HuggingFace Dataset</span></a>' +
@@ -165,12 +165,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var mcols = ['#0891B2','#0E7490','#155E75','#22D3EE','#06B6D4','#67E8F9','#A5F3FC','#164E63','#083344'];
     var chartData, chartLabel;
     if (largeSelectedTask === -1) {
-      chartLabel = 'Average EM% (All 17 Tasks)';
+      chartLabel = 'Descriptive average (Set-F1 + EM, 17 tasks)';
       chartData = LARGE_MODELS.map(function (m, i) {
         var row = LARGE_DATA[i]; return { model: m, val: parseFloat((row.reduce(function(a,b){return a+b;},0)/row.length).toFixed(1)) };
       });
     } else {
-      chartLabel = LARGE_TASKS[largeSelectedTask].name + ' — EM%';
+      chartLabel = LARGE_TASKS[largeSelectedTask].name + ' — ' + (LARGE_TASKS[largeSelectedTask].metric || 'Exact Match') + '%';
       chartData = LARGE_MODELS.map(function (m, i) { return { model: m, val: LARGE_DATA[i][largeSelectedTask] }; });
     }
     chartData.sort(function(a,b){return b.val-a.val;});
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var tbody = document.querySelector('#largeTable tbody');
     if (!thead || !tbody) return;
     var hdr = '<tr><th>Model</th>';
-    LARGE_TASKS.forEach(function(t){hdr+='<th title="'+t.category+'">'+t.name+'</th>';});
+    LARGE_TASKS.forEach(function(t){hdr+='<th title="'+t.category+' — '+(t.metric||'Exact Match')+'">'+t.name+'</th>';});
     hdr += '<th>Avg</th></tr>'; thead.innerHTML = hdr;
     var allVals = []; LARGE_DATA.forEach(function(r){r.forEach(function(v){allVals.push(v);});});
     var gMin = Math.min.apply(null, allVals), gMax = Math.max.apply(null, allVals);

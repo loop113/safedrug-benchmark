@@ -10,6 +10,13 @@ var DATASET_CATEGORIES = [
     description: 'Given a drug (by name and SMILES structure), identify all known adverse drug events (ADEs) from a list of options. Tasks are stratified by patient age group (child, adult, older adult) to evaluate age-specific pharmacological knowledge.',
     subs: [
       {
+        id: 'ade_age_combined', name: 'ADE - Combined Age Groups',
+        file: 'Large/ade_prediction/ade_prediction_age/ade_prediction_age.jsonl', format: 'jsonl',
+        fields: ['instance_id', 'task_instance_id', 'prompt', 'task_name', 'split', 'answer'],
+        taskType: 'Multi-label classification',
+        description: 'Combined age-stratified ADE examples; the child, adult and older-adult files below provide separate views.', example: null
+      },
+      {
         id: 'ade_overall',
         name: 'ADE Overall Performance',
         file: 'Large/ade_prediction/ade_prediction_overall/ADE_prediction_Overallperformance.jsonl',
@@ -76,6 +83,26 @@ var DATASET_CATEGORIES = [
           prompt: 'You are an expert clinical pharmacologist specializing in geriatrics...\n\n[SCENARIO: Geriatric Case Study - Theoretical]\nPatient Profile: Older Adult / Geriatric Patient.\nDrug Prescribed: Cefpodoxime\nChemical Structure (SMILES): COC1=CC(=C2C(=O)N(C(=O)C2=O)C(=O)OC(C)C)C=C1...\n\nTask: Identify side effects that are specifically documented or observed in older adult populations for this drug.\nOptions:\nA. Clostridium difficile colitis\nB. Pseudomembranous colitis\nC. Acute generalised exanthematous pustulosis\nD. Coombs positive haemolytic anaemia\nE. Eosinophilic pneumonia\nF. None of the above',
           answer: 'A, B'
         }
+      }
+    ]
+  },
+  {
+    id: 'single_drug_global',
+    name: 'Single-Drug Source Data',
+    nameCN: '单药来源数据',
+    description: 'Underlying integrated single-drug records and their schema; source labels identify CT-ADE, SIDER, OFFSIDES and pediatric records. This is source data, not an additional evaluation task.',
+    subs: [
+      {
+        id: 'single_drug_global_records', name: 'Single-Drug Global Records',
+        file: 'Large/Single_Drug_Global_Data/Single_Drug_Globla_Data.jsonl', format: 'jsonl',
+        fields: ['primary_key', 'drug_info', 'drug_identifiers', 'side_effects'],
+        taskType: 'Source records', description: 'Integrated drug and side-effect records with provenance labels; large source file, not a test split.', example: null
+      },
+      {
+        id: 'single_drug_global_schema', name: 'Single-Drug Record Structure',
+        file: 'Large/Single_Drug_Global_Data/struct.json', format: 'json',
+        fields: ['primary_key', 'drug_info', 'side_effects'],
+        taskType: 'Schema example', description: 'Example structure for the global single-drug records.', example: null
       }
     ]
   },
@@ -223,7 +250,7 @@ var DATASET_CATEGORIES = [
     id: 'multiple_drug_prediction',
     name: 'Multiple Drug Prediction',
     nameCN: '多药联合预测',
-    description: 'Evaluate whether concurrent administration of 3, 4, 5, or 10 drugs leads to clinically significant adverse DDIs. Two sub-tasks: (1) binary DDI prediction (Yes/No), (2) adverse event severity classification (serious/non-serious).',
+    description: 'Polypharmacy tasks cover 3–10 concurrent drugs. Two sub-tasks: binary DDI prediction (Yes/No) and adverse event severity classification (serious/non-serious).',
     subs: [
       {
         id: 'multi_ddi_3',
@@ -261,6 +288,30 @@ var DATASET_CATEGORIES = [
         taskType: 'Binary classification (Yes/No)',
         description: 'Same task with 5 co-administered drugs.',
         example: null
+      },
+      {
+        id: 'multi_ddi_6', name: 'Multiple Drug DDI - 6 Drugs',
+        file: 'Large/multiple_drug_prediction/ddi_prediction/6_drug.jsonl', format: 'jsonl',
+        fields: ['instance_id', 'task_instance_id', 'prompt', 'task_name', 'split', 'answer'],
+        taskType: 'Binary classification (Yes/No)', description: 'DDI prediction with 6 co-administered drugs.', example: null
+      },
+      {
+        id: 'multi_ddi_7', name: 'Multiple Drug DDI - 7 Drugs',
+        file: 'Large/multiple_drug_prediction/ddi_prediction/7_drug.jsonl', format: 'jsonl',
+        fields: ['instance_id', 'task_instance_id', 'prompt', 'task_name', 'split', 'answer'],
+        taskType: 'Binary classification (Yes/No)', description: 'DDI prediction with 7 co-administered drugs.', example: null
+      },
+      {
+        id: 'multi_ddi_8', name: 'Multiple Drug DDI - 8 Drugs',
+        file: 'Large/multiple_drug_prediction/ddi_prediction/8_drug.jsonl', format: 'jsonl',
+        fields: ['instance_id', 'task_instance_id', 'prompt', 'task_name', 'split', 'answer'],
+        taskType: 'Binary classification (Yes/No)', description: 'DDI prediction with 8 co-administered drugs.', example: null
+      },
+      {
+        id: 'multi_ddi_9', name: 'Multiple Drug DDI - 9 Drugs',
+        file: 'Large/multiple_drug_prediction/ddi_prediction/9_drug.jsonl', format: 'jsonl',
+        fields: ['instance_id', 'task_instance_id', 'prompt', 'task_name', 'split', 'answer'],
+        taskType: 'Binary classification (Yes/No)', description: 'DDI prediction with 9 co-administered drugs.', example: null
       },
       {
         id: 'multi_ddi_10',
@@ -308,6 +359,30 @@ var DATASET_CATEGORIES = [
         taskType: 'Binary classification',
         description: 'Same severity classification with 5 drugs.',
         example: null
+      },
+      {
+        id: 'multi_risk_6', name: 'Multiple Drug Risk - 6 Drugs',
+        file: 'Large/multiple_drug_prediction/ddi_risk_prediction/6_drug.jsonl', format: 'jsonl',
+        fields: ['instance_id', 'task_instance_id', 'prompt', 'task_name', 'split', 'answer'],
+        taskType: 'Binary classification (serious/non-serious)', description: 'Risk classification with 6 co-administered drugs.', example: null
+      },
+      {
+        id: 'multi_risk_7', name: 'Multiple Drug Risk - 7 Drugs',
+        file: 'Large/multiple_drug_prediction/ddi_risk_prediction/7_drug.jsonl', format: 'jsonl',
+        fields: ['instance_id', 'task_instance_id', 'prompt', 'task_name', 'split', 'answer'],
+        taskType: 'Binary classification (serious/non-serious)', description: 'Risk classification with 7 co-administered drugs.', example: null
+      },
+      {
+        id: 'multi_risk_8', name: 'Multiple Drug Risk - 8 Drugs',
+        file: 'Large/multiple_drug_prediction/ddi_risk_prediction/8_drug.jsonl', format: 'jsonl',
+        fields: ['instance_id', 'task_instance_id', 'prompt', 'task_name', 'split', 'answer'],
+        taskType: 'Binary classification (serious/non-serious)', description: 'Risk classification with 8 co-administered drugs.', example: null
+      },
+      {
+        id: 'multi_risk_9', name: 'Multiple Drug Risk - 9 Drugs',
+        file: 'Large/multiple_drug_prediction/ddi_risk_prediction/9_drug.jsonl', format: 'jsonl',
+        fields: ['instance_id', 'task_instance_id', 'prompt', 'task_name', 'split', 'answer'],
+        taskType: 'Binary classification (serious/non-serious)', description: 'Risk classification with 9 co-administered drugs.', example: null
       },
       {
         id: 'multi_risk_10',
@@ -369,6 +444,58 @@ var DATASET_CATEGORIES = [
     ]
   },
   {
+    id: 'ddi_agent_eval_qwen',
+    name: 'DDI Agent Evaluation (Qwen-Prepared)',
+    nameCN: 'DDI智能体评估（Qwen整理）',
+    description: 'Alternative Qwen-prepared Small benchmark, aligned with the clean DeepSeek-prepared split by source interaction. Used to examine construction-source sensitivity; do not combine with the original split as independent cases.',
+    subs: [
+      {
+        id: 'qwen_agent_train', name: 'Qwen Agent Eval - Train',
+        file: 'Small/split_qwen37/ddi_agent_eval_train.jsonl', format: 'jsonl',
+        fields: ['id', 'task_tier', 'task_name', 'task_format', 'model_input', 'label', 'answer', 'scoring_hint'],
+        taskType: 'Mixed DDI agent tasks', description: 'Qwen-prepared aligned training split (1,822 rows).', example: null
+      },
+      {
+        id: 'qwen_agent_dev', name: 'Qwen Agent Eval - Dev',
+        file: 'Small/split_qwen37/ddi_agent_eval_dev.jsonl', format: 'jsonl',
+        fields: ['id', 'task_tier', 'task_name', 'task_format', 'model_input', 'label', 'answer', 'scoring_hint'],
+        taskType: 'Mixed DDI agent tasks', description: 'Qwen-prepared aligned development split (328 rows).', example: null
+      },
+      {
+        id: 'qwen_agent_test', name: 'Qwen Agent Eval - Test',
+        file: 'Small/split_qwen37/ddi_agent_eval_test.jsonl', format: 'jsonl',
+        fields: ['id', 'task_tier', 'task_name', 'task_format', 'model_input', 'label', 'answer', 'scoring_hint'],
+        taskType: 'Mixed DDI agent tasks', description: 'Qwen-prepared aligned test split (404 rows).', example: null
+      },
+      {
+        id: 'qwen_align_summary', name: 'Qwen Split Alignment Summary',
+        file: 'Small/split_qwen37/align_summary.json', format: 'json',
+        fields: ['train_rows', 'dev_rows', 'test_rows', 'unmatched_rows', 'outputs'],
+        taskType: 'Alignment metadata', description: 'Counts and alignment metadata for the Qwen-prepared split.', example: null
+      }
+    ]
+  },
+  {
+    id: 'dataset_documentation',
+    name: 'Dataset Documentation',
+    nameCN: '数据集说明',
+    description: 'Metadata and split summaries; these files document data provenance and responsible research use rather than providing extra test questions.',
+    subs: [
+      {
+        id: 'responsible_ai', name: 'Responsible AI Metadata',
+        file: 'responsible_ai_metadata.json', format: 'json',
+        fields: ['schema_version', 'dataset_name', 'research_use_only', 'clinical_use_status', 'data_provenance'],
+        taskType: 'Documentation', description: 'Data provenance, licensing, privacy, bias, intended use and prohibited clinical use.', example: null
+      },
+      {
+        id: 'clean_split_summary', name: 'Clean Split Summary',
+        file: 'Small/splits_clean/clean_summary.json', format: 'json',
+        fields: ['input_dir', 'output_dir', 'files'],
+        taskType: 'Split metadata', description: 'Summary metadata for the original clean Small splits.', example: null
+      }
+    ]
+  },
+  {
     id: 'ddi_agent_eval',
     name: 'DDI Agent Evaluation (Clean Splits)',
     nameCN: 'DDI智能体评估（标准划分）',
@@ -377,7 +504,7 @@ var DATASET_CATEGORIES = [
       {
         id: 'agent_train',
         name: 'Agent Eval - Train',
-        file: 'Small/splits_clean/splits_clean/ddi_agent_eval_train.jsonl',
+        file: 'Small/splits_clean/ddi_agent_eval_train.jsonl',
         format: 'jsonl',
         fields: ['id', 'task_tier', 'task_name', 'task_format', 'model_input', 'label', 'answer', 'scoring_hint'],
         taskType: 'Various (classification, multi_label, multi_choice, span_selection, generation)',
@@ -402,7 +529,7 @@ var DATASET_CATEGORIES = [
       {
         id: 'agent_dev',
         name: 'Agent Eval - Dev',
-        file: 'Small/splits_clean/splits_clean/ddi_agent_eval_dev.jsonl',
+        file: 'Small/splits_clean/ddi_agent_eval_dev.jsonl',
         format: 'jsonl',
         fields: ['id', 'task_tier', 'task_name', 'task_format', 'model_input', 'label', 'answer', 'scoring_hint'],
         taskType: 'Various',
@@ -412,7 +539,7 @@ var DATASET_CATEGORIES = [
       {
         id: 'agent_test',
         name: 'Agent Eval - Test',
-        file: 'Small/splits_clean/splits_clean/ddi_agent_eval_test.jsonl',
+        file: 'Small/splits_clean/ddi_agent_eval_test.jsonl',
         format: 'jsonl',
         fields: ['id', 'task_tier', 'task_name', 'task_format', 'model_input', 'label', 'answer', 'scoring_hint'],
         taskType: 'Various',
